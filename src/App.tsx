@@ -21,8 +21,6 @@ import { Certificates } from "./pages/Certificates";
 import { AppIds } from "./pages/AppIds";
 import { Settings } from "./pages/Settings";
 import { Pairing } from "./pages/Pairing";
-import { getVersion } from "@tauri-apps/api/app";
-import { checkForUpdates } from "./update";
 import logo from "./iloader.svg";
 import { GlassCard } from "./components/GlassCard";
 import { useTranslation } from "react-i18next";
@@ -39,7 +37,6 @@ function App() {
   const [openModal, setOpenModal] = useState<
     null | "certificates" | "appids" | "pairing"
   >(null);
-  const [version, setVersion] = useState<string>("");
 
   const refreshDevicesRef = useRef<(() => void) | null>(null);
 
@@ -59,18 +56,6 @@ function App() {
   useEffect(() => {
     checkKeyring();
   }, [checkKeyring]);
-
-  useEffect(() => {
-    const fetchVersion = async () => {
-      const version = await getVersion();
-      setVersion(version);
-    };
-    fetchVersion();
-  }, []);
-
-  useEffect(() => {
-    checkForUpdates();
-  }, []);
 
   const shortcutLabel = useCallback(
     (mac: string, windows: string, linux?: string) => {
@@ -185,22 +170,19 @@ function App() {
           <div className="title-block">
             <img src={logo} alt={t("app.logo_alt")} className="logo" />
             <div>
-              <h1 className="title">iloader</h1>
+              <h1 className="title">Nexus-Signer</h1>
               <p className="subtitle">{t("subtitle")}</p>
             </div>
           </div>
-          <span className="version-pill">
-            {t("version")} {version}
-          </span>
         </div>
         <div className="header-actions">
           <button
             className="toolbar-button"
             onClick={async () => {
               try {
-                await openUrl("https://github.com/nab138/iloader");
+                await openUrl("https://math12393.codeberg.page/IPA-SIGNER-WEN/");
               } catch (error) {
-                console.error("Failed to open GitHub link", error);
+                console.error("Failed to open link", error);
                 toast.error(t("app.open_github_failed"));
               }
             }}
@@ -214,7 +196,6 @@ function App() {
           <section className="workspace-section">
             <div className="section-header">
               <p className="section-label">{t("app.section_account")}</p>
-              {/* here to ensure spacing and stuff is correct */}
               <span className="section-hint placeholder" aria-hidden="true">
                 Placeholder
               </span>
@@ -311,6 +292,7 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: false,
                       liveContainer: false,
+                      liveContainerNightly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -325,6 +307,7 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: true,
                       liveContainer: false,
+                      liveContainerNightly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -339,6 +322,7 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: false,
                       liveContainer: true,
+                      liveContainerNightly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -353,6 +337,7 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: true,
                       liveContainer: true,
+                      liveContainerNightly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -408,7 +393,7 @@ function App() {
         isOpen={openModal === "certificates"}
         close={() => setOpenModal(null)}
       >
-        <Certificates />
+        <CompanyCertificates />
       </Modal>
       <Modal isOpen={openModal === "appids"} close={() => setOpenModal(null)}>
         <AppIds />
@@ -419,5 +404,8 @@ function App() {
     </main>
   );
 }
+
+// Minimal fallback component if your local names match custom types
+const CompanyCertificates = Certificates;
 
 export default App;
