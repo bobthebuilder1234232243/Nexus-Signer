@@ -9,6 +9,7 @@ import {
   sideloadOperation,
   installSideStoreOperation,
   installLiveContainerOperation,
+  installStandaloneLiveContainerOperation,
   Operation,
   OperationState,
   OperationUpdate,
@@ -345,6 +346,38 @@ function App() {
                   }}
                 >
                   {t("app.livecontainer_sidestore_nightly")}
+                </button>
+                <button
+                  onClick={() => {
+                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
+                    startOperation(installStandaloneLiveContainerOperation, {
+                      nightly: false,
+                      liveContainer: false,
+                      standaloneLiveContainer: true,
+                      liveContainerNightly: false,
+                    }).catch((e) => {
+                      console.log(e.type);
+                      console.error(e.message);
+                    });
+                  }}
+                >
+                  {t("app.standalone_livecontainer_stable")}
+                </button>
+                <button
+                  onClick={() => {
+                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
+                    startOperation(installStandaloneLiveContainerOperation, {
+                      nightly: true,
+                      liveContainer: false,
+                      standaloneLiveContainer: true,
+                      liveContainerNightly: false,
+                    }).catch((e) => {
+                      console.log(e.type);
+                      console.error(e.message);
+                    });
+                  }}
+                >
+                  {t("app.standalone_livecontainer_nightly")}
                 </button>
                 <button
                   onClick={async () => {
