@@ -90,6 +90,7 @@ pub async fn install_sidestore_operation(
     sideloader_state: State<'_, SideloaderMutex>,
     nightly: bool,
     live_container: bool,
+    standalone_live_container: bool, // new parameter
 ) -> Result<(), AppError> {
     let op = Operation::new("install_sidestore".to_string(), &window);
     op.start("download")?;
@@ -104,6 +105,18 @@ pub async fn install_sidestore_operation(
             (
                 "LiveContainerSideStore.ipa",
                 "https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer+SideStore.ipa",
+            )
+        }
+    } else if standalone_live_container {
+        if nightly {
+            (
+                "LiveContainer-Nightly.ipa",
+                "https://github.com/LiveContainer/LiveContainer/releases/download/nightly/LiveContainer.ipa",
+            )
+        } else {
+            (
+                "LiveContainer.ipa",
+                "https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer.ipa",
             )
         }
     } else if nightly {
