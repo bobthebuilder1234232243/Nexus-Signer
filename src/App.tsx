@@ -293,6 +293,7 @@ function App() {
             </div>
             <GlassCard className="panel">
               <div className="action-row single-row">
+                {/* 1. SideStore Stable */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -300,12 +301,14 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: false,
                       liveContainer: false,
-                      liveContainerNightly: false,
+                      standaloneLiveContainer: false,
                     });
                   }}
                 >
                   {t("app.sidestore_stable")}
                 </button>
+
+                {/* 2. SideStore Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -313,12 +316,14 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: true,
                       liveContainer: false,
-                      liveContainerNightly: false,
+                      standaloneLiveContainer: false,
                     });
                   }}
                 >
                   {t("app.sidestore_nightly")}
                 </button>
+
+                {/* 3. LiveContainer via SideStore Stable */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -326,12 +331,14 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: false,
                       liveContainer: true,
-                      liveContainerNightly: false,
+                      standaloneLiveContainer: false,
                     });
                   }}
                 >
                   {t("app.livecontainer_sidestore_stable")}
                 </button>
+
+                {/* 4. LiveContainer via SideStore Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -339,12 +346,14 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: true,
                       liveContainer: true,
-                      liveContainerNightly: false,
+                      standaloneLiveContainer: false,
                     });
                   }}
                 >
                   {t("app.livecontainer_sidestore_nightly")}
                 </button>
+
+                {/* 5. Standalone LiveContainer Stable */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -353,12 +362,13 @@ function App() {
                       nightly: false,
                       liveContainer: false,
                       standaloneLiveContainer: true,
-                      liveContainerNightly: false,
                     });
                   }}
                 >
                   {t("app.standalone_livecontainer_stable")}
                 </button>
+
+                {/* 6. Standalone LiveContainer Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
@@ -367,12 +377,13 @@ function App() {
                       nightly: true,
                       liveContainer: false,
                       standaloneLiveContainer: true,
-                      liveContainerNightly: false,
                     });
                   }}
                 >
                   {t("app.standalone_livecontainer_nightly")}
                 </button>
+
+                {/* 7. Custom IPA Import */}
                 <button
                   disabled={isProcessing}
                   onClick={async () => {
@@ -418,7 +429,7 @@ function App() {
         isOpen={openModal === "certificates"}
         close={() => setOpenModal(null)}
       >
-        <CompanyCertificates />
+        <Certificates />
       </Modal>
       <Modal isOpen={openModal === "appids"} close={() => setOpenModal(null)}>
         <AppIds />
@@ -429,7 +440,5 @@ function App() {
     </main>
   );
 }
-
-const CompanyCertificates = Certificates;
 
 export default App;
