@@ -116,6 +116,12 @@
     "install_livecontainer_step_download": "Download LiveContainer+SideStore",
     "install_livecontainer_step_install": "Sign & Install LiveContainer+SideStore",
     "install_livecontainer_step_pairing": "Place Pairing File",
+    "install_standalone_livecontainer_title": "Installing Standalone LiveContainer",
+    "install_standalone_livecontainer_success_title": "Standalone LiveContainer Installed!",
+    "install_standalone_livecontainer_success_message": "LiveContainer has been installed. You can now use it to run other apps.",
+    "install_standalone_livecontainer_step_download": "Download Standalone LiveContainer",
+    "install_standalone_livecontainer_step_install": "Sign & Install Standalone LiveContainer",
+    "install_standalone_livecontainer_step_pairing": "Finalizing installation",
     "sideload_title": "Installing App",
     "sideload_step_install": "Sign & Install App"
   },
