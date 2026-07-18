@@ -92,7 +92,14 @@ pub async fn install_sidestore_operation(
     live_container: bool,
     standalone_live_container: bool,
 ) -> Result<(), AppError> {
-    let op = Operation::new("install_sidestore".to_string(), &window);
+    // FIX 1: Use the correct operation ID matching the frontend
+    let op_id = if standalone_live_container {
+        "install_standalone_livecontainer".to_string()
+    } else {
+        "install_sidestore".to_string()
+    };
+
+    let op = Operation::new(op_id, &window);
     op.start("download")?;
     
     let (filename, url) = if live_container {
@@ -157,17 +164,29 @@ pub async fn install_sidestore_operation(
         .await,
     )?;
 
-    // Standalone LiveContainer is complete after installation – no pairing needed
+    // FIX 2: Standalone LiveContainer stops here – cycle through the "pairing" step
+    // so the frontend's 3‑step definition finishes cleanly.
     if standalone_live_container {
-        op.complete("install")?;
+        op.move_on("install", "pairing")?;
+        op.complete("pairing")?;
         return Ok(());
     }
 
     op.move_on("install", "pairing")?;
-    let sidestore_info = op.fail_if_err(
-        "pairing",
-        get_sidestore_info(&device.info, live_container).await,
-    )?;
+    
+    // FIX 3: Safe handling of get_sidestore_info to avoid abrupt panics
+    let sidestore_info = match get_sidestore_info(&device.info, live_container).await {
+        Ok(info) => info,
+        Err(e) => {
+            return op.fail(
+                "pairing",
+                AppError::HouseArrest(
+                    "SideStore validation failed".into(),
+                    format!("Failed during environment information parsing: {}", e),
+                ),
+            );
+        }
+    };
     
     if let Some(info) = sidestore_info {
         let mut usbmuxd = op.fail_if_err("pairing", get_usbmuxd().await)?;
@@ -185,8 +204,8 @@ pub async fn install_sidestore_operation(
         return op.fail(
             "pairing",
             AppError::HouseArrest(
-                "SideStore's not found".into(),
-                "The device did not report SideStore's bundle ID as installed".into(),
+                "SideStore app context missing".into(),
+                "The device successfully completed installation, but could not read application verification properties via house_arrest.".into(),
             ),
         );
     }
