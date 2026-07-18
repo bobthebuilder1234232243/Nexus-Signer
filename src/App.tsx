@@ -110,7 +110,8 @@ function App() {
           },
         );
 
-        await invoke(operation.id + "_operation", params);
+        const commandName = (operation.backendCommand ?? operation.id) + "_operation";
+        await invoke(commandName, params);
       } catch (e: any) {
         console.log(e?.type);
         console.error(e?.message || e);
