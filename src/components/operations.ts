@@ -58,7 +58,7 @@ export const installSideStoreOperation: Operation = {
 };
 
 export const installLiveContainerOperation: Operation = {
-  id: "install_sidestore",
+  id: "install_livecontainer",
   titleKey: "operations.install_livecontainer_title",
   successTitleKey: "operations.install_livecontainer_success_title",
   successMessageKey: "operations.install_livecontainer_success_message",
@@ -79,7 +79,7 @@ export const installLiveContainerOperation: Operation = {
 };
 
 export const installStandaloneLiveContainerOperation: Operation = {
-  id: "install_sidestore",
+  id: "install_standalone_livecontainer",
   titleKey: "operations.install_standalone_livecontainer_title",
   successTitleKey: "operations.install_standalone_livecontainer_success_title",
   successMessageKey: "operations.install_standalone_livecontainer_success_message",
@@ -99,7 +99,7 @@ export const installStandaloneLiveContainerOperation: Operation = {
   ],
 };
 
-export const sideloadOperation = {
+export const sideloadOperation: Operation = {
   id: "sideload",
   titleKey: "operations.sideload_title",
   steps: [
