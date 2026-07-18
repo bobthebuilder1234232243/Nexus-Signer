@@ -2,6 +2,7 @@ import { AppError } from "../errors";
 
 export type Operation = {
   id: string;
+  backendCommand?: string;
   titleKey: string;
   successMessageKey?: string;
   successTitleKey?: string;
@@ -59,6 +60,7 @@ export const installSideStoreOperation: Operation = {
 
 export const installLiveContainerOperation: Operation = {
   id: "install_livecontainer",
+  backendCommand: "install_sidestore",
   titleKey: "operations.install_livecontainer_title",
   successTitleKey: "operations.install_livecontainer_success_title",
   successMessageKey: "operations.install_livecontainer_success_message",
@@ -80,6 +82,7 @@ export const installLiveContainerOperation: Operation = {
 
 export const installStandaloneLiveContainerOperation: Operation = {
   id: "install_standalone_livecontainer",
+  backendCommand: "install_sidestore",
   titleKey: "operations.install_standalone_livecontainer_title",
   successTitleKey: "operations.install_standalone_livecontainer_success_title",
   successMessageKey: "operations.install_standalone_livecontainer_success_message",
