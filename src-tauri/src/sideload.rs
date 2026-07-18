@@ -90,11 +90,11 @@ pub async fn install_sidestore_operation(
     sideloader_state: State<'_, SideloaderMutex>,
     nightly: bool,
     live_container: bool,
-    standalone_live_container: bool, // new parameter
+    standalone_live_container: bool,
 ) -> Result<(), AppError> {
     let op = Operation::new("install_sidestore".to_string(), &window);
     op.start("download")?;
-    // TODO: Cache & check version to avoid re-downloading
+    
     let (filename, url) = if live_container {
         if nightly {
             (
@@ -138,6 +138,7 @@ pub async fn install_sidestore_operation(
         .join(filename);
     op.fail_if_err("download", download(url, &dest).await)?;
     op.move_on("download", "install")?;
+    
     let device = {
         let device_guard = device_state.lock().unwrap();
         match &*device_guard {
@@ -145,6 +146,7 @@ pub async fn install_sidestore_operation(
             None => return op.fail("install", AppError::NoDeviceSelected),
         }
     };
+    
     op.fail_if_err(
         "install",
         sideload(
@@ -154,11 +156,19 @@ pub async fn install_sidestore_operation(
         )
         .await,
     )?;
+
+    // Standalone LiveContainer is complete after installation – no pairing needed
+    if standalone_live_container {
+        op.complete("install")?;
+        return Ok(());
+    }
+
     op.move_on("install", "pairing")?;
     let sidestore_info = op.fail_if_err(
         "pairing",
         get_sidestore_info(&device.info, live_container).await,
     )?;
+    
     if let Some(info) = sidestore_info {
         let mut usbmuxd = op.fail_if_err("pairing", get_usbmuxd().await)?;
 
