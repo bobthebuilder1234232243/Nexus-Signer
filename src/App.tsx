@@ -78,8 +78,13 @@ function App() {
       let unlistenFn: UnlistenFn | null = null;
 
       try {
+        // Use backendCommand if present, otherwise fallback to operation.id
+        const baseCommand = operation.backendCommand ?? operation.id;
+        const eventChannel = "operation_" + baseCommand;
+        const commandName = baseCommand + "_operation";
+
         unlistenFn = await listen<OperationUpdate>(
-          "operation_" + operation.id,
+          eventChannel,
           (event) => {
             setOperationState((old) => {
               if (old == null) return null;
@@ -110,7 +115,6 @@ function App() {
           },
         );
 
-        const commandName = (operation.backendCommand ?? operation.id) + "_operation";
         await invoke(commandName, params);
       } catch (e: any) {
         console.log(e?.type);
