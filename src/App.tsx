@@ -14,7 +14,7 @@ import {
   OperationState,
   OperationUpdate,
 } from "./components/operations";
-import { listen } from "@tauri-apps/api/event";
+import { listen, UnlistenFn } from "@tauri-apps/api/event";
 import OperationView from "./components/OperationView";
 import { toast } from "sonner";
 import { Modal } from "./components/Modal";
@@ -30,17 +30,13 @@ import { usePlatform } from "./PlatformContext";
 function App() {
   const { t } = useTranslation();
 
-  const [operationState, setOperationState] = useState<OperationState | null>(
-    null,
-  );
+  const [operationState, setOperationState] = useState<OperationState | null>(null);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [loggedInAs, setLoggedInAs] = useState<string | null>(null);
   const [selectedDevice, setSelectedDevice] = useState<DeviceInfo | null>(null);
-  const [openModal, setOpenModal] = useState<
-    null | "certificates" | "appids" | "pairing"
-  >(null);
+  const [openModal, setOpenModal] = useState<null | "certificates" | "appids" | "pairing">(null);
 
   const refreshDevicesRef = useRef<(() => void) | null>(null);
-
   const [noKeyringAvailable, setNoKeyringAvailable] = useState<boolean>(false);
   const { platform } = usePlatform();
 
@@ -68,18 +64,21 @@ function App() {
   );
 
   const startOperation = useCallback(
-    async (
-      operation: Operation,
-      params: { [key: string]: any },
-    ): Promise<void> => {
+    async (operation: Operation, params: { [key: string]: any }): Promise<void> => {
+      if (isProcessing) return;
+      
+      setIsProcessing(true);
       setOperationState({
         current: operation,
         started: [],
         failed: [],
         completed: [],
       });
-      return new Promise<void>(async (resolve, reject) => {
-        const unlistenFn = await listen<OperationUpdate>(
+
+      let unlistenFn: UnlistenFn | null = null;
+
+      try {
+        unlistenFn = await listen<OperationUpdate>(
           "operation_" + operation.id,
           (event) => {
             setOperationState((old) => {
@@ -110,17 +109,20 @@ function App() {
             });
           },
         );
-        try {
-          await invoke(operation.id + "_operation", params);
+
+        await invoke(operation.id + "_operation", params);
+      } catch (e: any) {
+        console.log(e?.type);
+        console.error(e?.message || e);
+        toast.error(t("operations.execution_failed"));
+      } finally {
+        if (unlistenFn) {
           unlistenFn();
-          resolve();
-        } catch (e) {
-          unlistenFn();
-          reject(e);
         }
-      });
+        setIsProcessing(false);
+      }
     },
-    [setOperationState],
+    [isProcessing, t],
   );
 
   const ensuredLoggedIn = useCallback((): boolean => {
@@ -214,6 +216,7 @@ function App() {
             <div className="workspace-list">
               <button
                 className="workspace-list-item"
+                disabled={isProcessing}
                 onClick={() => {
                   if (!ensureSelectedDevice()) return;
                   setOpenModal("pairing");
@@ -233,6 +236,7 @@ function App() {
               </button>
               <button
                 className="workspace-list-item"
+                disabled={isProcessing}
                 onClick={() => {
                   if (!ensuredLoggedIn()) return;
                   setOpenModal("certificates");
@@ -245,6 +249,7 @@ function App() {
               </button>
               <button
                 className="workspace-list-item"
+                disabled={isProcessing}
                 onClick={() => {
                   if (!ensuredLoggedIn()) return;
                   setOpenModal("appids");
@@ -288,66 +293,59 @@ function App() {
             <GlassCard className="panel">
               <div className="action-row single-row">
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installSideStoreOperation, {
                       nightly: false,
                       liveContainer: false,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.sidestore_stable")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installSideStoreOperation, {
                       nightly: true,
                       liveContainer: false,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.sidestore_nightly")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installLiveContainerOperation, {
                       nightly: false,
                       liveContainer: true,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.livecontainer_sidestore_stable")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installLiveContainerOperation, {
                       nightly: true,
                       liveContainer: true,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.livecontainer_sidestore_nightly")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installStandaloneLiveContainerOperation, {
@@ -355,15 +353,13 @@ function App() {
                       liveContainer: false,
                       standaloneLiveContainer: true,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.standalone_livecontainer_stable")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installStandaloneLiveContainerOperation, {
@@ -371,15 +367,13 @@ function App() {
                       liveContainer: false,
                       standaloneLiveContainer: true,
                       liveContainerNightly: false,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
                   {t("app.standalone_livecontainer_nightly")}
                 </button>
                 <button
+                  disabled={isProcessing}
                   onClick={async () => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     let path = await openFileDialog({
@@ -391,9 +385,6 @@ function App() {
                     if (!path) return;
                     startOperation(sideloadOperation, {
                       appPath: path as string,
-                    }).catch((e) => {
-                      console.log(e.type);
-                      console.error(e.message);
                     });
                   }}
                 >
@@ -438,7 +429,6 @@ function App() {
   );
 }
 
-// Minimal fallback component if your local names match custom types
 const CompanyCertificates = Certificates;
 
 export default App;
