@@ -95,10 +95,6 @@ export const installStandaloneLiveContainerOperation: Operation = {
       id: "install",
       titleKey: "operations.install_standalone_livecontainer_step_install",
     },
-    {
-      id: "pairing",
-      titleKey: "operations.install_standalone_livecontainer_step_pairing",
-    },
   ],
 };
 
