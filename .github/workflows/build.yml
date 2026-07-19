@@ -1,4 +1,4 @@
-name: "Build iloader (Nexus)"
+name: "Build iloader (Nexus2)"
 
 on:
   push:
