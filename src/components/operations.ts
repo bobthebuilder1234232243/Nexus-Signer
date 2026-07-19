@@ -2,7 +2,7 @@ import { AppError } from "../errors";
 
 export type Operation = {
   id: string;
-  backendCommand?: string;
+  backendCommand?: string;          // <-- needed for event channel routing
   titleKey: string;
   successMessageKey?: string;
   successTitleKey?: string;
@@ -43,58 +43,35 @@ export const installSideStoreOperation: Operation = {
   successTitleKey: "operations.install_sidestore_success_title",
   successMessageKey: "operations.install_sidestore_success_message",
   steps: [
-    {
-      id: "download",
-      titleKey: "operations.install_sidestore_step_download",
-    },
-    {
-      id: "install",
-      titleKey: "operations.install_sidestore_step_install",
-    },
-    {
-      id: "pairing",
-      titleKey: "operations.install_sidestore_step_pairing",
-    },
+    { id: "download", titleKey: "operations.install_sidestore_step_download" },
+    { id: "install", titleKey: "operations.install_sidestore_step_install" },
+    { id: "pairing", titleKey: "operations.install_sidestore_step_pairing" },
   ],
 };
 
 export const installLiveContainerOperation: Operation = {
   id: "install_livecontainer",
-  backendCommand: "install_sidestore",
+  backendCommand: "install_sidestore",   // routes to the same backend
   titleKey: "operations.install_livecontainer_title",
   successTitleKey: "operations.install_livecontainer_success_title",
   successMessageKey: "operations.install_livecontainer_success_message",
   steps: [
-    {
-      id: "download",
-      titleKey: "operations.install_livecontainer_step_download",
-    },
-    {
-      id: "install",
-      titleKey: "operations.install_livecontainer_step_install",
-    },
-    {
-      id: "pairing",
-      titleKey: "operations.install_livecontainer_step_pairing",
-    },
+    { id: "download", titleKey: "operations.install_livecontainer_step_download" },
+    { id: "install", titleKey: "operations.install_livecontainer_step_install" },
+    { id: "pairing", titleKey: "operations.install_livecontainer_step_pairing" },
   ],
 };
 
 export const installStandaloneLiveContainerOperation: Operation = {
   id: "install_standalone_livecontainer",
-  backendCommand: "install_sidestore",
+  backendCommand: "install_sidestore",   // same backend, but fewer steps
   titleKey: "operations.install_standalone_livecontainer_title",
   successTitleKey: "operations.install_standalone_livecontainer_success_title",
   successMessageKey: "operations.install_standalone_livecontainer_success_message",
   steps: [
-    {
-      id: "download",
-      titleKey: "operations.install_standalone_livecontainer_step_download",
-    },
-    {
-      id: "install",
-      titleKey: "operations.install_standalone_livecontainer_step_install",
-    },
+    { id: "download", titleKey: "operations.install_standalone_livecontainer_step_download" },
+    { id: "install", titleKey: "operations.install_standalone_livecontainer_step_install" },
+    // pairing omitted because the backend skips it for standalone
   ],
 };
 
@@ -102,9 +79,6 @@ export const sideloadOperation: Operation = {
   id: "sideload",
   titleKey: "operations.sideload_title",
   steps: [
-    {
-      id: "install",
-      titleKey: "operations.sideload_step_install",
-    },
+    { id: "install", titleKey: "operations.sideload_step_install" },
   ],
 };
