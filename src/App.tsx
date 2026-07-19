@@ -78,6 +78,7 @@ function App() {
       let unlistenFn: UnlistenFn | null = null;
 
       try {
+        // Channel name matches backend's Operation::new("install_sidestore")
         const baseCommand = operation.backendCommand ?? operation.id;
         const eventChannel = "operation_" + baseCommand;
         const commandName = baseCommand + "_operation";
@@ -87,7 +88,7 @@ function App() {
           (event) => {
             setOperationState((old) => {
               if (old == null) return null;
-              const stepId = event.payload.stepId; // raw "download", "install", etc.
+              const stepId = event.payload.stepId; // raw "download", "install", "pairing"
               if (event.payload.updateType === "started") {
                 return {
                   ...old,
