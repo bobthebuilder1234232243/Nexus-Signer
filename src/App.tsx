@@ -78,7 +78,6 @@ function App() {
       let unlistenFn: UnlistenFn | null = null;
 
       try {
-        // Use backendCommand if present, otherwise fallback to operation.id
         const baseCommand = operation.backendCommand ?? operation.id;
         const eventChannel = "operation_" + baseCommand;
         const commandName = baseCommand + "_operation";
@@ -88,15 +87,16 @@ function App() {
           (event) => {
             setOperationState((old) => {
               if (old == null) return null;
+              const stepId = event.payload.stepId; // raw "download", "install", etc.
               if (event.payload.updateType === "started") {
                 return {
                   ...old,
-                  started: [...old.started, event.payload.stepId],
+                  started: [...old.started, stepId],
                 };
               } else if (event.payload.updateType === "finished") {
                 return {
                   ...old,
-                  completed: [...old.completed, event.payload.stepId],
+                  completed: [...old.completed, stepId],
                 };
               } else if (event.payload.updateType === "failed") {
                 return {
@@ -121,9 +121,7 @@ function App() {
         console.error(e?.message || e);
         toast.error(t("operations.execution_failed"));
       } finally {
-        if (unlistenFn) {
-          unlistenFn();
-        }
+        if (unlistenFn) unlistenFn();
         setIsProcessing(false);
       }
     },
@@ -204,9 +202,7 @@ function App() {
           <section className="workspace-section">
             <div className="section-header">
               <p className="section-label">{t("app.section_account")}</p>
-              <span className="section-hint placeholder" aria-hidden="true">
-                Placeholder
-              </span>
+              <span className="section-hint placeholder" aria-hidden="true">Placeholder</span>
             </div>
             <GlassCard className="panel">
               <AppleID
@@ -222,48 +218,29 @@ function App() {
               <button
                 className="workspace-list-item"
                 disabled={isProcessing}
-                onClick={() => {
-                  if (!ensureSelectedDevice()) return;
-                  setOpenModal("pairing");
-                }}
+                onClick={() => { if (!ensureSelectedDevice()) return; setOpenModal("pairing"); }}
               >
-                {t("app.manage_pairing_file")}{" "}
-                <span aria-hidden="true">{shortcutLabel("⌘P", "Ctrl+P")}</span>
+                {t("app.manage_pairing_file")} <span aria-hidden="true">{shortcutLabel("⌘P", "Ctrl+P")}</span>
               </button>
               <button
                 className="workspace-list-item"
-                onClick={() => {
-                  refreshDevicesRef.current?.();
-                }}
+                onClick={() => { refreshDevicesRef.current?.(); }}
               >
-                {t("app.refresh_devices")}{" "}
-                <span aria-hidden="true">{shortcutLabel("⌘R", "Ctrl+R")}</span>
+                {t("app.refresh_devices")} <span aria-hidden="true">{shortcutLabel("⌘R", "Ctrl+R")}</span>
               </button>
               <button
                 className="workspace-list-item"
                 disabled={isProcessing}
-                onClick={() => {
-                  if (!ensuredLoggedIn()) return;
-                  setOpenModal("certificates");
-                }}
+                onClick={() => { if (!ensuredLoggedIn()) return; setOpenModal("certificates"); }}
               >
-                {t("app.certificates")}{" "}
-                <span aria-hidden="true">
-                  {shortcutLabel("⌘⇧C", "Ctrl+Shift+C")}
-                </span>
+                {t("app.certificates")} <span aria-hidden="true">{shortcutLabel("⌘⇧C", "Ctrl+Shift+C")}</span>
               </button>
               <button
                 className="workspace-list-item"
                 disabled={isProcessing}
-                onClick={() => {
-                  if (!ensuredLoggedIn()) return;
-                  setOpenModal("appids");
-                }}
+                onClick={() => { if (!ensuredLoggedIn()) return; setOpenModal("appids"); }}
               >
-                {t("app.app_ids")}{" "}
-                <span aria-hidden="true">
-                  {shortcutLabel("⌘⇧A", "Ctrl+Shift+A")}
-                </span>
+                {t("app.app_ids")} <span aria-hidden="true">{shortcutLabel("⌘⇧A", "Ctrl+Shift+A")}</span>
               </button>
             </div>
           </section>
@@ -274,9 +251,7 @@ function App() {
               <p className="section-label">{t("app.devices")}</p>
               <span className="section-hint">
                 {selectedDevice
-                  ? t("app.active_device", {
-                      name: `${selectedDevice.name} (${selectedDevice.version})`,
-                    })
+                  ? t("app.active_device", { name: `${selectedDevice.name} (${selectedDevice.version})` })
                   : t("app.select_device")}
               </span>
             </div>
@@ -284,9 +259,7 @@ function App() {
               <Device
                 selectedDevice={selectedDevice}
                 setSelectedDevice={setSelectedDevice}
-                registerRefresh={(fn) => {
-                  refreshDevicesRef.current = fn ?? null;
-                }}
+                registerRefresh={(fn) => { refreshDevicesRef.current = fn ?? null; }}
               />
             </GlassCard>
           </section>
@@ -302,106 +275,72 @@ function App() {
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installSideStoreOperation, {
-                      nightly: false,
-                      liveContainer: false,
-                      standaloneLiveContainer: false,
-                    });
+                    startOperation(installSideStoreOperation, { nightly: false, liveContainer: false, standaloneLiveContainer: false });
                   }}
                 >
                   {t("app.sidestore_stable")}
                 </button>
-
                 {/* 2. SideStore Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installSideStoreOperation, {
-                      nightly: true,
-                      liveContainer: false,
-                      standaloneLiveContainer: false,
-                    });
+                    startOperation(installSideStoreOperation, { nightly: true, liveContainer: false, standaloneLiveContainer: false });
                   }}
                 >
                   {t("app.sidestore_nightly")}
                 </button>
-
-                {/* 3. LiveContainer via SideStore Stable */}
+                {/* 3. LiveContainer + SideStore Stable */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installLiveContainerOperation, {
-                      nightly: false,
-                      liveContainer: true,
-                      standaloneLiveContainer: false,
-                    });
+                    startOperation(installLiveContainerOperation, { nightly: false, liveContainer: true, standaloneLiveContainer: false });
                   }}
                 >
                   {t("app.livecontainer_sidestore_stable")}
                 </button>
-
-                {/* 4. LiveContainer via SideStore Nightly */}
+                {/* 4. LiveContainer + SideStore Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installLiveContainerOperation, {
-                      nightly: true,
-                      liveContainer: true,
-                      standaloneLiveContainer: false,
-                    });
+                    startOperation(installLiveContainerOperation, { nightly: true, liveContainer: true, standaloneLiveContainer: false });
                   }}
                 >
                   {t("app.livecontainer_sidestore_nightly")}
                 </button>
-
                 {/* 5. Standalone LiveContainer Stable */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installStandaloneLiveContainerOperation, {
-                      nightly: false,
-                      liveContainer: false,
-                      standaloneLiveContainer: true,
-                    });
+                    startOperation(installStandaloneLiveContainerOperation, { nightly: false, liveContainer: false, standaloneLiveContainer: true });
                   }}
                 >
                   {t("app.standalone_livecontainer_stable")}
                 </button>
-
                 {/* 6. Standalone LiveContainer Nightly */}
                 <button
                   disabled={isProcessing}
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
-                    startOperation(installStandaloneLiveContainerOperation, {
-                      nightly: true,
-                      liveContainer: false,
-                      standaloneLiveContainer: true,
-                    });
+                    startOperation(installStandaloneLiveContainerOperation, { nightly: true, liveContainer: false, standaloneLiveContainer: true });
                   }}
                 >
                   {t("app.standalone_livecontainer_nightly")}
                 </button>
-
-                {/* 7. Custom IPA Import */}
+                {/* 7. Import IPA */}
                 <button
                   disabled={isProcessing}
                   onClick={async () => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     let path = await openFileDialog({
                       multiple: false,
-                      filters: [
-                        { name: t("app.ipa_files"), extensions: ["ipa"] },
-                      ],
+                      filters: [{ name: t("app.ipa_files"), extensions: ["ipa"] }],
                     });
                     if (!path) return;
-                    startOperation(sideloadOperation, {
-                      appPath: path as string,
-                    });
+                    startOperation(sideloadOperation, { appPath: path as string });
                   }}
                 >
                   {t("app.import_ipa")}
@@ -429,10 +368,7 @@ function App() {
           )}
         </section>
       </div>
-      <Modal
-        isOpen={openModal === "certificates"}
-        close={() => setOpenModal(null)}
-      >
+      <Modal isOpen={openModal === "certificates"} close={() => setOpenModal(null)}>
         <Certificates />
       </Modal>
       <Modal isOpen={openModal === "appids"} close={() => setOpenModal(null)}>
