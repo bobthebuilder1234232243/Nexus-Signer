@@ -9,8 +9,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  background: #2c2c2e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--control-bg);
+  border: 1px solid var(--border);
   padding: 0.65rem 0.9rem;
   border-radius: 12px;
   font-weight: 500;
@@ -18,11 +18,11 @@
 
 .custom-dropdown.open .dropdown-toggle {
   border-color: var(--accent-primary);
-  background: #3a3a3c;
+  background: var(--control-bg-hover);
 }
 
 .dropdown-caret {
-  border: solid rgba(255, 255, 255, 0.7);
+  border: solid var(--text-muted);
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 0.25rem;
@@ -39,10 +39,10 @@
   top: calc(100% + 0.35rem);
   left: 0;
   width: 100%;
-  background: #2c2c2e;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 20px 40px var(--shadow-strong);
   padding: 0.35rem;
   z-index: 5;
   max-height: 260px;
@@ -75,12 +75,12 @@
 
 .dropdown-option:hover,
 .dropdown-option:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--subtle-bg);
 }
 
 .dropdown-option.selected {
-  background: rgba(10, 132, 255, 0.18);
-  color: #fff;
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 .dropdown-option .checkmark {

@@ -16,18 +16,75 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  color: #f2f2f7;
-  background-color: #0b0b0d;
+  color: var(--text);
+  background-color: var(--bg-page);
 
-  --glass-surface: #1c1c1e;
-  --glass-surface-alt: #2c2c2e;
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-highlight: #0a84ff;
+  color-scheme: dark;
+
+  --bg-page: #0b0b0d;
+  --bg-app: #0f0f11;
+  --bg-header: rgba(28, 28, 30, 0.9);
+  --surface: #1c1c1e;
+  --surface-alt: #2c2c2e;
+  --surface-hover: #3a3a3c;
+  --control-bg: #2c2c2e;
+  --control-bg-hover: #3a3a3c;
+  --subtle-bg: rgba(255, 255, 255, 0.08);
+  --hover-subtle: rgba(255, 255, 255, 0.02);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --text: #f2f2f7;
   --text-muted: #8e8e93;
+  --text-faint: rgba(247, 249, 255, 0.5);
+  --text-faintest: rgba(247, 249, 255, 0.35);
+  --shadow: rgba(0, 0, 0, 0.45);
+  --shadow-strong: rgba(0, 0, 0, 0.65);
+  --code-bg: rgba(0, 0, 0, 0.4);
+  --page-dot: rgba(255, 255, 255, 0.4);
+  --warning-text: #f1d473;
+  --glass-surface: var(--surface);
+  --glass-surface-alt: var(--surface-alt);
+  --glass-border: var(--border);
+  --glass-highlight: #0a84ff;
   --accent-primary: #0a84ff;
   --accent-secondary: #007aff;
+  --accent-soft: rgba(10, 132, 255, 0.18);
   --success: #30d158;
   --danger: #ff453a;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-page: #f2f3f7;
+  --bg-app: #f7f8fb;
+  --bg-header: rgba(255, 255, 255, 0.85);
+  --surface: #ffffff;
+  --surface-alt: #ffffff;
+  --surface-hover: #e9ecf2;
+  --control-bg: #f4f5f9;
+  --control-bg-hover: #e9ecf2;
+  --subtle-bg: rgba(15, 23, 42, 0.05);
+  --hover-subtle: rgba(15, 23, 42, 0.035);
+  --border: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.18);
+  --border-soft: rgba(15, 23, 42, 0.08);
+  --text: #16181d;
+  --text-muted: #5f6470;
+  --text-faint: rgba(22, 24, 29, 0.6);
+  --text-faintest: rgba(22, 24, 29, 0.45);
+  --shadow: rgba(15, 23, 42, 0.12);
+  --shadow-strong: rgba(15, 23, 42, 0.22);
+  --code-bg: rgba(15, 23, 42, 0.06);
+  --page-dot: rgba(22, 24, 29, 0.3);
+  --warning-text: #8a6300;
+  --glass-surface: var(--surface);
+  --glass-surface-alt: var(--surface-alt);
+  --glass-border: var(--border);
+  --accent-soft: rgba(10, 132, 255, 0.14);
+  --success: #1f9e46;
+  --danger: #d0342c;
 }
 
 * {
@@ -49,7 +106,7 @@ textarea {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #0b0b0d;
+  background-color: var(--bg-page);
 }
 
 #root {
@@ -60,7 +117,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0f0f11;
+  background: var(--bg-app);
 }
 
 .workspace-header {
@@ -68,8 +125,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(28, 28, 30, 0.9);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-header);
   backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
@@ -107,18 +164,7 @@ body {
   pointer-events: none;
 }
 
-.version-pill {
-  padding: 0.65rem 1.4rem;
-  border-radius: 14px;
-  font-size: 0.95rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 130px;
-  white-space: nowrap;
-}
+
 
 .header-actions {
   display: flex;
@@ -126,15 +172,25 @@ body {
 }
 
 .toolbar-button {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--subtle-bg);
   border-radius: 14px;
   padding: 0.65rem 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border-strong);
   font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 130px;
+}
+
+.toolbar-button.theme-toggle {
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  min-width: unset;
+}
+
+.toolbar-button.theme-toggle svg {
+  font-size: 1.05rem;
 }
 
 .workspace-body {
@@ -184,7 +240,7 @@ body {
 
 .section-hint {
   font-size: 0.9rem;
-  color: rgba(247, 249, 255, 0.5);
+  color: var(--text-faint);
 }
 
 .section-hint.placeholder {
@@ -199,8 +255,8 @@ select {
   font-size: 1rem;
   font-family: inherit;
   color: inherit;
-  background: #2c2c2e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--control-bg);
+  border: 1px solid var(--border);
   transition:
     border-color 0.15s ease,
     background 0.15s ease,
@@ -219,22 +275,22 @@ select option:hover {
 }
 
 input::placeholder {
-  color: rgba(242, 242, 247, 0.55);
+  color: var(--text-faint);
 }
 
 input:focus,
 select:focus {
   border-color: var(--accent-primary);
   outline: none;
-  background: #3a3a3c;
+  background: var(--control-bg-hover);
 }
 
 button {
   cursor: pointer;
   font-weight: 600;
   letter-spacing: 0.01em;
-  background: #2c2c2e;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--control-bg);
+  border: 1px solid var(--border-strong);
   box-shadow: none;
 }
 
@@ -244,7 +300,7 @@ button:disabled {
 }
 
 button:hover:not(:disabled) {
-  background: #3a3a3c;
+  background: var(--control-bg-hover);
   border-color: var(--accent-primary);
 }
 
@@ -257,22 +313,22 @@ button:active:not(:disabled) {
   padding: 1.1rem;
   background: var(--glass-surface);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 18px 32px var(--shadow);
   color: inherit;
 }
 
 .card {
   border-radius: 1.1rem;
   padding: 1rem 1.25rem;
-  background: #2c2c2e;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
 }
 
 .panel {
   padding: 1.35rem;
   border-radius: 1.25rem;
   background: var(--glass-surface-alt);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border);
 }
 
 .action-grid {
@@ -316,7 +372,7 @@ button:active:not(:disabled) {
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-soft);
   font-family: inherit;
 }
 
@@ -326,11 +382,11 @@ button:active:not(:disabled) {
 
 .workspace-list-item span {
   font-size: 0.95rem;
-  color: rgba(247, 249, 255, 0.35);
+  color: var(--text-faintest);
 }
 
 .workspace-list-item:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--hover-subtle);
 }
 
 .section-label + .panel,

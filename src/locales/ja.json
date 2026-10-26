@@ -21,7 +21,7 @@
   },
   "app": {
     "language": "言語",
-    "github": "GitHub",
+    "github": "Nexus Signer",
     "open_github_failed": "GitHubのリンクを開けませんでした",
     "section_account": "アカウント",
     "section_placeholder": "プレースホルダー",

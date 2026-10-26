@@ -9,6 +9,7 @@ import {
   sideloadOperation,
   installSideStoreOperation,
   installLiveContainerOperation,
+  installLiveContainerOnlyOperation,
   Operation,
   OperationState,
   OperationUpdate,
@@ -21,12 +22,13 @@ import { Certificates } from "./pages/Certificates";
 import { AppIds } from "./pages/AppIds";
 import { Settings } from "./pages/Settings";
 import { Pairing } from "./pages/Pairing";
-import { getVersion } from "@tauri-apps/api/app";
 import { checkForUpdates } from "./update";
 import logo from "./nexus-signer.svg";
 import { GlassCard } from "./components/GlassCard";
 import { useTranslation } from "react-i18next";
 import { usePlatform } from "./PlatformContext";
+import { useStore } from "./StoreContext";
+import { FaMoon, FaSun } from "react-icons/fa6";
 
 function App() {
   const { t } = useTranslation();
@@ -39,7 +41,12 @@ function App() {
   const [openModal, setOpenModal] = useState<
     null | "certificates" | "appids" | "pairing"
   >(null);
-  const [version, setVersion] = useState<string>("");
+  const [theme, setTheme] = useStore<"light" | "dark">(
+    "theme",
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark",
+  );
 
   const refreshDevicesRef = useRef<(() => void) | null>(null);
 
@@ -61,12 +68,9 @@ function App() {
   }, [checkKeyring]);
 
   useEffect(() => {
-    const fetchVersion = async () => {
-      const version = await getVersion();
-      setVersion(version);
-    };
-    fetchVersion();
-  }, []);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
 
   useEffect(() => {
     checkForUpdates();
@@ -189,9 +193,17 @@ function App() {
               <p className="subtitle">{t("subtitle")}</p>
             </div>
           </div>
-          <span className="version-pill">
-            {t("version")} {version}
-          </span>
+          <button
+            className="toolbar-button theme-toggle"
+            aria-label={
+              theme === "dark" ? t("app.light_mode") : t("app.dark_mode")
+            }
+            title={theme === "dark" ? t("app.light_mode") : t("app.dark_mode")}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
+            {theme === "dark" ? t("app.light_mode") : t("app.dark_mode")}
+          </button>
         </div>
         <div className="header-actions">
           <button
@@ -311,6 +323,7 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: false,
                       liveContainer: false,
+                      liveContainerOnly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -325,6 +338,7 @@ function App() {
                     startOperation(installSideStoreOperation, {
                       nightly: true,
                       liveContainer: false,
+                      liveContainerOnly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -339,6 +353,7 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: false,
                       liveContainer: true,
+                      liveContainerOnly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -353,6 +368,7 @@ function App() {
                     startOperation(installLiveContainerOperation, {
                       nightly: true,
                       liveContainer: true,
+                      liveContainerOnly: false,
                     }).catch((e) => {
                       console.log(e.type);
                       console.error(e.message);
@@ -360,6 +376,36 @@ function App() {
                   }}
                 >
                   {t("app.livecontainer_sidestore_nightly")}
+                </button>
+                <button
+                  onClick={() => {
+                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
+                    startOperation(installLiveContainerOnlyOperation, {
+                      nightly: false,
+                      liveContainer: false,
+                      liveContainerOnly: true,
+                    }).catch((e) => {
+                      console.log(e.type);
+                      console.error(e.message);
+                    });
+                  }}
+                >
+                  {t("app.livecontainer_stable")}
+                </button>
+                <button
+                  onClick={() => {
+                    if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
+                    startOperation(installLiveContainerOnlyOperation, {
+                      nightly: true,
+                      liveContainer: false,
+                      liveContainerOnly: true,
+                    }).catch((e) => {
+                      console.log(e.type);
+                      console.error(e.message);
+                    });
+                  }}
+                >
+                  {t("app.livecontainer_nightly")}
                 </button>
                 <button
                   onClick={async () => {

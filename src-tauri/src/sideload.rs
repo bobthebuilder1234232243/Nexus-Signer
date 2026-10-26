@@ -102,11 +102,24 @@ pub async fn install_sidestore_operation(
     sideloader_state: State<'_, SideloaderMutex>,
     nightly: bool,
     live_container: bool,
+    live_container_only: bool,
 ) -> Result<(), AppError> {
     let op = Operation::new("install_sidestore".to_string(), &window);
     op.start("download")?;
     // TODO: Cache & check version to avoid re-downloading
-    let (filename, url) = if live_container {
+    let (filename, url) = if live_container_only {
+        if nightly {
+            (
+                "LiveContainer-Nightly.ipa",
+                "https://github.com/LiveContainer/LiveContainer/releases/download/nightly/LiveContainer.ipa",
+            )
+        } else {
+            (
+                "LiveContainer.ipa",
+                "https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer.ipa",
+            )
+        }
+    } else if live_container {
         if nightly {
             (
                 "LiveContainerSideStore-Nightly.ipa",
@@ -153,6 +166,13 @@ pub async fn install_sidestore_operation(
         )
         .await,
     )?;
+    // A standalone LiveContainer has no SideStore container to place the pairing
+    // file into, so there is no pairing step in that flow.
+    if live_container_only {
+        op.complete("install")?;
+        return Ok(());
+    }
+
     op.move_on("install", "pairing")?;
     let sidestore_info = op.fail_if_err(
         "pairing",

@@ -21,7 +21,7 @@
   },
   "app": {
     "language": "Sprache",
-    "github": "GitHub",
+    "github": "Nexus Signer",
     "open_github_failed": "GitHub-Link konnte nicht geöffnet werden",
     "section_account": "Konto",
     "section_placeholder": "Platzhalter",

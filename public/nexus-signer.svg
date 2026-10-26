@@ -1,4 +1,106 @@
-<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M220.5 75.5V279.5H424.5V424.5H75.5V75.5H220.5Z" fill="#06581F" stroke="#00CA4A" stroke-width="25"/>
-<path d="M347 166.563L380.602 132.962L398.279 150.64L334.919 214H409V239H261V214H334.36L271 150.64L288.678 132.962L322 166.284V91H347V166.563Z" fill="white"/>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="24" x2="470" y2="492" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a56b8" />
+      <stop offset="0.45" stop-color="#2685d3" />
+      <stop offset="1" stop-color="#3ad1c6" />
+    </linearGradient>
+    <linearGradient id="gloss" x1="256" y1="8" x2="256" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <clipPath id="squircle">
+      <rect x="8" y="8" width="496" height="496" rx="112" />
+    </clipPath>
+    <mask id="jaw">
+      <rect width="512" height="512" fill="#000000" />
+      <circle cx="80" cy="84" r="24" stroke="#ffffff" stroke-width="15" fill="none" />
+      <rect x="80" y="71" width="62" height="26" fill="#000000" transform="rotate(225 80 84)" />
+    </mask>
+  </defs>
+
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#bg)" />
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#gloss)" />
+
+  <g clip-path="url(#squircle)">
+    <circle
+      cx="256"
+      cy="256"
+      r="202"
+      stroke="#ffffff"
+      stroke-opacity="0.35"
+      stroke-width="5"
+      stroke-linecap="round"
+      stroke-dasharray="2 15"
+    />
+  </g>
+
+  <g
+    stroke="#ffffff"
+    stroke-width="13"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  >
+    <!-- wrench -->
+    <rect
+      x="0"
+      y="0"
+      width="512"
+      height="512"
+      fill="#ffffff"
+      mask="url(#jaw)"
+      stroke="none"
+    />
+    <path d="M 98 102 L 162 166" stroke-width="16" />
+
+    <!-- gear -->
+    <circle cx="118" cy="240" r="30" />
+    <circle cx="118" cy="240" r="10" />
+    <path d="M 118 206 L 118 196" stroke-width="15" />
+    <path d="M 118 274 L 118 284" stroke-width="15" />
+    <path d="M 84 240 L 74 240" stroke-width="15" />
+    <path d="M 152 240 L 162 240" stroke-width="15" />
+    <path d="M 94 216 L 87 209" stroke-width="15" />
+    <path d="M 142 264 L 149 271" stroke-width="15" />
+    <path d="M 94 264 L 87 271" stroke-width="15" />
+    <path d="M 142 216 L 149 209" stroke-width="15" />
+
+    <!-- stacked pages -->
+    <rect x="222" y="84" width="140" height="162" rx="16" fill="url(#bg)" />
+    <rect x="196" y="102" width="140" height="162" rx="16" fill="url(#bg)" />
+    <rect x="170" y="120" width="140" height="162" rx="16" fill="url(#bg)" />
+    <path d="M 194 170 L 244 170" />
+    <path d="M 194 192 L 244 192" />
+    <path d="M 194 214 L 226 214" />
+
+    <!-- award seal -->
+    <circle cx="276" cy="223" r="17" />
+    <circle cx="276" cy="223" r="6.5" />
+    <path d="M 267 240 L 263 259 L 271 254 L 279 259 L 285 240" stroke-width="10" />
+
+    <!-- folder -->
+    <path
+      d="M 96 304 C 96 284 110 272 130 272 L 176 272 C 188 272 196 277 204 288 L 218 310 L 366 310 C 389 310 402 323 402 344 L 402 384 C 402 402 390 414 372 414 L 126 414 C 108 414 96 402 96 384 Z"
+      fill="url(#bg)"
+    />
+
+    <!-- check mark -->
+    <path d="M 292 350 L 330 400 L 448 264" stroke-width="26" />
+
+    <!-- pen -->
+    <path
+      d="M 391 417 L 446 362 L 424 340 L 369 396 L 356 430 Z"
+      stroke-width="14"
+      fill="url(#bg)"
+    />
+    <path d="M 432 376 L 410 354" stroke-width="10" />
+  </g>
+
+  <g stroke="#ffffff" stroke-width="19" stroke-linecap="round" fill="none">
+    <path d="M 118 326 L 118 382" />
+    <path d="M 166 382 L 166 326 L 188 326 A 20 20 0 0 1 188 366 L 166 366" />
+    <path d="M 226 382 L 248 326 L 270 382" />
+    <path d="M 235 362 L 261 362" />
+  </g>
 </svg>

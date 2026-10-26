@@ -1,5 +1,5 @@
 .error-inner {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--code-bg);
   overflow: auto;
   padding: 0.65em;
   border-radius: 12px;

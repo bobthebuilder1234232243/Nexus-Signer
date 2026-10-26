@@ -47,11 +47,11 @@
 }
 
 .link-button:hover {
-  color: #fff;
+  color: var(--text);
 }
 
 .log-inner {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--code-bg);
   overflow: auto;
   border-radius: 12px;
   font-family: "SF Mono", "Menlo", monospace;

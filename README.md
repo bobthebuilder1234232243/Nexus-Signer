@@ -1,8 +1,5 @@
 <a href="https://techperson1234.github.io/IPA-SIGNER-WEN/">
-  <picture align="left" >
-    <source media="(prefers-color-scheme: dark)" srcset="/nexus-signer.svg">
-    <img align="left" width="90" height="90" src="/nexus-signer-dark.svg">
-  </picture>
+  <img align="left" width="90" height="90" src="./nexus-signer.svg" alt="nexus-signer">
   
   <div id="user-content-toc">
     <ul style="list-style: none;">
@@ -33,7 +30,7 @@ Install SideStore (or other apps) and import your pairing file with ease
 
 ## Features
 
-- Install SideStore (or LiveContainer + SideStore), import certificate and place rppairing+lockdown pairing files automatically
+- Install SideStore, LiveContainer + SideStore or LiveContainer, import certificate and place rppairing+lockdown pairing files automatically
 - Import any IPA
 - Intelligent error suggestions to help resolve common issues
 - Manage pairing files in apps like StikDebug, SideStore, Protokolle, etc

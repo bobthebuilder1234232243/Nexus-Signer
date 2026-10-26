@@ -21,7 +21,7 @@
   },
   "app": {
     "language": "Язык",
-    "github": "GitHub",
+    "github": "Nexus Signer",
     "open_github_failed": "Не удаётся открыть ссылку на GitHub",
     "section_account": "Аккаунт",
     "section_placeholder": "Заглушка",

@@ -16,7 +16,7 @@
   background: var(--glass-surface-alt);
   border-radius: 24px;
   border: 1px solid var(--glass-border);
-  box-shadow: 0 35px 65px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 35px 65px var(--shadow-strong);
   padding: 2em;
   max-width: 95vw;
   max-height: 90vh;
@@ -39,7 +39,7 @@
   box-shadow: none;
   border: none;
   padding: 0;
-  color: #fff;
+  color: var(--text);
 }
 
 .modal-circles {
@@ -68,14 +68,14 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: #fff6;
+  background-color: var(--page-dot);
   transition: all 0.2s;
   align-self: center;
   position: relative;
 }
 
 .active-page {
-  background-color: #fffffff0;
+  background-color: var(--text);
 }
 
 .modal-content {

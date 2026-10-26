@@ -16,7 +16,7 @@
 }
 
 .certificate-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--border-strong);
   margin: 0;
   padding: 0.5em;
 }
@@ -26,7 +26,7 @@
 }
 
 .cert-item-part {
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid var(--border);
   padding-right: 0.5em;
 }
 
@@ -43,5 +43,6 @@
 }
 
 .cert-item-revoke:hover {
-  color: #ffbb9c;
+  color: var(--danger);
+  filter: brightness(1.3);
 }
