@@ -41,8 +41,6 @@
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore（夜晚版）",
     "livecontainer_stable": "LiveContainer（穩定版）",
     "livecontainer_nightly": "LiveContainer（每夜版本）",
-    "light_mode": "淺色模式",
-    "dark_mode": "深色模式",
     "import_ipa": "匯入 IPA",
     "settings": "設定",
     "must_be_logged_in": "你一定要登入！",

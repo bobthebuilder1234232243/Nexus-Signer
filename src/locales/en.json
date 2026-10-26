@@ -41,8 +41,6 @@
     "livecontainer_sidestore_nightly": "LiveContainer + SideStore (Nightly)",
     "livecontainer_stable": "LiveContainer (Stable)",
     "livecontainer_nightly": "LiveContainer (Nightly)",
-    "light_mode": "Light mode",
-    "dark_mode": "Dark mode",
     "import_ipa": "Import IPA",
     "settings": "Settings",
     "must_be_logged_in": "You must be logged in!",

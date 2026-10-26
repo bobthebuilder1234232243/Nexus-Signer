@@ -27,8 +27,6 @@ import logo from "./nexus-signer.svg";
 import { GlassCard } from "./components/GlassCard";
 import { useTranslation } from "react-i18next";
 import { usePlatform } from "./PlatformContext";
-import { useStore } from "./StoreContext";
-import { FaMoon, FaSun } from "react-icons/fa6";
 
 function App() {
   const { t } = useTranslation();
@@ -41,13 +39,6 @@ function App() {
   const [openModal, setOpenModal] = useState<
     null | "certificates" | "appids" | "pairing"
   >(null);
-  const [theme, setTheme] = useStore<"light" | "dark">(
-    "theme",
-    window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark",
-  );
-
   const refreshDevicesRef = useRef<(() => void) | null>(null);
 
   const [noKeyringAvailable, setNoKeyringAvailable] = useState<boolean>(false);
@@ -66,11 +57,6 @@ function App() {
   useEffect(() => {
     checkKeyring();
   }, [checkKeyring]);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-  }, [theme]);
 
   useEffect(() => {
     checkForUpdates();
@@ -193,17 +179,6 @@ function App() {
               <p className="subtitle">{t("subtitle")}</p>
             </div>
           </div>
-          <button
-            className="toolbar-button theme-toggle"
-            aria-label={
-              theme === "dark" ? t("app.light_mode") : t("app.dark_mode")
-            }
-            title={theme === "dark" ? t("app.light_mode") : t("app.dark_mode")}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? <FaSun /> : <FaMoon />}
-            {theme === "dark" ? t("app.light_mode") : t("app.dark_mode")}
-          </button>
         </div>
         <div className="header-actions">
           <button

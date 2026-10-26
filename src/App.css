@@ -19,8 +19,6 @@
   color: var(--text);
   background-color: var(--bg-page);
 
-  color-scheme: dark;
-
   --bg-page: #0b0b0d;
   --bg-app: #0f0f11;
   --bg-header: rgba(28, 28, 30, 0.9);
@@ -52,39 +50,6 @@
   --accent-soft: rgba(10, 132, 255, 0.18);
   --success: #30d158;
   --danger: #ff453a;
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-
-  --bg-page: #f2f3f7;
-  --bg-app: #f7f8fb;
-  --bg-header: rgba(255, 255, 255, 0.85);
-  --surface: #ffffff;
-  --surface-alt: #ffffff;
-  --surface-hover: #e9ecf2;
-  --control-bg: #f4f5f9;
-  --control-bg-hover: #e9ecf2;
-  --subtle-bg: rgba(15, 23, 42, 0.05);
-  --hover-subtle: rgba(15, 23, 42, 0.035);
-  --border: rgba(15, 23, 42, 0.12);
-  --border-strong: rgba(15, 23, 42, 0.18);
-  --border-soft: rgba(15, 23, 42, 0.08);
-  --text: #16181d;
-  --text-muted: #5f6470;
-  --text-faint: rgba(22, 24, 29, 0.6);
-  --text-faintest: rgba(22, 24, 29, 0.45);
-  --shadow: rgba(15, 23, 42, 0.12);
-  --shadow-strong: rgba(15, 23, 42, 0.22);
-  --code-bg: rgba(15, 23, 42, 0.06);
-  --page-dot: rgba(22, 24, 29, 0.3);
-  --warning-text: #8a6300;
-  --glass-surface: var(--surface);
-  --glass-surface-alt: var(--surface-alt);
-  --glass-border: var(--border);
-  --accent-soft: rgba(10, 132, 255, 0.14);
-  --success: #1f9e46;
-  --danger: #d0342c;
 }
 
 * {
@@ -181,16 +146,6 @@ body {
   align-items: center;
   justify-content: center;
   min-width: 130px;
-}
-
-.toolbar-button.theme-toggle {
-  gap: 0.5rem;
-  padding: 0.65rem 1.1rem;
-  min-width: unset;
-}
-
-.toolbar-button.theme-toggle svg {
-  font-size: 1.05rem;
 }
 
 .workspace-body {
