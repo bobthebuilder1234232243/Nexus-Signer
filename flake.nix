@@ -58,7 +58,7 @@
           '';
         };
 
-      iloader_gen =
+      nexus_signer_gen =
         {
           pkgs,
           tools ? [ ],
@@ -122,11 +122,11 @@
         system:
         let
           pkgs = pkgs_gen { inherit system; };
-          iloader = iloader_gen { inherit pkgs; };
+          nexus-signer = nexus_signer_gen { inherit pkgs; };
         in
         {
-          inherit iloader;
-          default = iloader;
+          inherit nexus-signer;
+          default = nexus-signer;
         }
       );
       formatter = forAllSystems (

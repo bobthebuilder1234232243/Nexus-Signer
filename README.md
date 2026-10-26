@@ -1,13 +1,13 @@
-<a href="https://iloader.app">
+<a href="https://techperson1234.github.io/IPA-SIGNER-WEN/">
   <picture align="left" >
-    <source media="(prefers-color-scheme: dark)" srcset="/iloader.svg">
-    <img align="left" width="90" height="90" src="/iloader-dark.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="/nexus-signer.svg">
+    <img align="left" width="90" height="90" src="/nexus-signer-dark.svg">
   </picture>
   
   <div id="user-content-toc">
     <ul style="list-style: none;">
       <summary>
-        <h1>iloader</h1>
+        <h1>nexus-signer</h1>
       </summary>
     </ul>
   </div>
@@ -15,14 +15,9 @@
 
 ---
 
-[![Build iloader](https://img.shields.io/github/actions/workflow/status/nab138/iloader/build.yml?style=flat&logo=github&logoColor=white&label=Build%20iloader)](https://github.com/nab138/iloader/actions/workflows/build.yml) ![Downloads](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fnab138%2F28258aff7e3f1d3a3084a21f4cff2e57%2Fraw%2Filoader_downloads.json&style=flat)
-[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/nab138)
-
 Install SideStore (or other apps) and import your pairing file with ease
 
-**This repository and [iloader.app](https://iloader.app) are the only official ways to download iloader. There is also an unofficial [Homebrew cask](https://formulae.brew.sh/cask/iloader), an unofficial [AUR package](https://aur.archlinux.org/packages/iloader-bin), and an unofficial [Fedora COPR repository](https://copr.fedorainfracloud.org/coprs/anudeepd/iloader) maintained by the community. Do not download from any other sources or websites.**
-
-<img width="1918" height="998" alt="iloader0" src="https://github.com/user-attachments/assets/93cd135d-6d89-46ee-9b9f-12c596806911" />
+**This repository and [https://techperson1234.github.io/IPA-SIGNER-WEN/](https://techperson1234.github.io/IPA-SIGNER-WEN/) are the official ways to download nexus-signer. Do not download from any other sources or websites.**
 
 ## How to use
 
@@ -30,10 +25,7 @@ Install SideStore (or other apps) and import your pairing file with ease
   - Windows: [iTunes](https://apple.co/ms)
   - macOS: Included
   - Linux: Potentially included, if not, install via your package manager
-- Install the latest version for your platform from the [releases](https://github.com/nab138/iloader/releases)
-  - NixOS: Use the flake `github:nab138/iloader`
-  - Fedora: Use the .RPM or the unofficial [Fedora COPR repository](https://copr.fedorainfracloud.org/coprs/anudeepd/iloader)
-  - Arch: Use the unofficial [AUR package](https://aur.archlinux.org/packages/iloader-bin),
+- Install the latest version for your platform from the [releases](https://techperson1234.github.io/IPA-SIGNER-WEN/)
 - Plug in your iDevice to your computer
 - Open the app
 - Sign into your Apple ID
@@ -49,16 +41,16 @@ Install SideStore (or other apps) and import your pairing file with ease
 
 ## Troubleshooting
 
-- If you are unable to solve an issue on your own, copy the full error message and ask on the [idevice Discord server](https://discord.gg/EA6yVgydBz) or [open an issue](https://github.com/nab138/iloader/issues).
+- If you are unable to solve an issue on your own, copy the full error message and ask on the [idevice Discord server](https://discord.gg/EA6yVgydBz) or [open an issue](https://techperson1234.github.io/IPA-SIGNER-WEN/).
 - You can view app logs with the "View Logs." If nothing is showing up, change the log level to "Debug."
 - If those logs aren't helpful, logs with additional are stored in the following locations:
-  - Windows: `%APPDATA%\me.nabdev.iloader\logs`
-  - macOS: `~/Library/Application Support/me.nabdev.iloader/logs`
-  - Linux: `~/.local/share/me.nabdev.iloader/logs/`
+  - Windows: `%APPDATA%\com.nexussigner.app\logs`
+  - macOS: `~/Library/Application Support/com.nexussigner.app/logs`
+  - Linux: `~/.local/share/com.nexussigner.app/logs/`
 
 ## Translating
 
-iloader needs localization! If you speak another language and notice iloader does not support it or has mistakes, please consider contributing.
+nexus-signer needs localization! If you speak another language and notice nexus-signer does not support it or has mistakes, please consider contributing.
 
 To update/edit an existing language, make a PR modifying `src/locales/<lang>.json`.
 
@@ -142,14 +134,6 @@ Copyright (C) 2026 nab138
 
 The source code of this repository is licensed under the MIT License. See the [LICENSE](/LICENSE) file for the full text.
 
-Branding, logos, media assets, and the name “iloader” are not licensed under the MIT License and are subject to separate restrictions.
-
-You may retain or use branding materials in forks, tutorials, or documentation if you include a clear link to either the official site (https://iloader.app) or the iloader source code repository (https://github.com/nab138/iloader) and do not imply official endorsement. See [LICENSE-BRANDING](/LICENSE-BRANDING) for full details.
-
 ## Contributing
 
 Please read our [Contributing](/CONTRIBUTING.md) policy before making a contribution.
-
-## Future Plans
-
-iloader is currently being overhauled, see the [trello board](https://trello.com/b/hAe1LHTj/iloader) for more info!

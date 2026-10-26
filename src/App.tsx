@@ -23,7 +23,7 @@ import { Settings } from "./pages/Settings";
 import { Pairing } from "./pages/Pairing";
 import { getVersion } from "@tauri-apps/api/app";
 import { checkForUpdates } from "./update";
-import logo from "./iloader.svg";
+import logo from "./nexus-signer.svg";
 import { GlassCard } from "./components/GlassCard";
 import { useTranslation } from "react-i18next";
 import { usePlatform } from "./PlatformContext";
@@ -185,7 +185,7 @@ function App() {
           <div className="title-block">
             <img src={logo} alt={t("app.logo_alt")} className="logo" />
             <div>
-              <h1 className="title">iloader</h1>
+              <h1 className="title">nexus-signer</h1>
               <p className="subtitle">{t("subtitle")}</p>
             </div>
           </div>
@@ -198,20 +198,7 @@ function App() {
             className="toolbar-button"
             onClick={async () => {
               try {
-                await openUrl("https://github.com/sponsors/nab138");
-              } catch (error) {
-                console.error("Failed to open GitHub link", error);
-                toast.error(t("app.open_github_failed"));
-              }
-            }}
-          >
-            ❤️ {t("app.donate")}
-          </button>
-          <button
-            className="toolbar-button"
-            onClick={async () => {
-              try {
-                await openUrl("https://github.com/nab138/iloader");
+                await openUrl("https://techperson1234.github.io/IPA-SIGNER-WEN/");
               } catch (error) {
                 console.error("Failed to open GitHub link", error);
                 toast.error(t("app.open_github_failed"));

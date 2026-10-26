@@ -151,7 +151,7 @@ export const Settings = ({
                   <span
                     onClick={() =>
                       openUrl(
-                        "https://github.com/nab138/iloader?tab=readme-ov-file#translating",
+                        "https://techperson1234.github.io/IPA-SIGNER-WEN/",
                       )
                     }
                     role="link"

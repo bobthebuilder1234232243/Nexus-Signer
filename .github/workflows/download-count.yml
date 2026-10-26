@@ -26,7 +26,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 28258aff7e3f1d3a3084a21f4cff2e57
-          filename: iloader_downloads.json
+          filename: nexus-signer_downloads.json
           label: downloads
           message: ${{ steps.count.outputs.download_count }}
           color: brightgreen

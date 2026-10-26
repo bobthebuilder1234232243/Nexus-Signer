@@ -211,7 +211,7 @@ export default ({
                   github: (
                     <span
                       onClick={() =>
-                        openUrl("https://github.com/nab138/iloader/issues")
+                        openUrl("https://techperson1234.github.io/IPA-SIGNER-WEN/")
                       }
                       role="link"
                       className="error-link"

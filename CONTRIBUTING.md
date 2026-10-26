@@ -1,30 +1,30 @@
-**Please note that iloader is currently undergoing a rewrite, including a UI overhaul, new supported platforms, etc.**
+**Please note that nexus-signer is currently undergoing a rewrite, including a UI overhaul, new supported platforms, etc.**
 
 **Contributions remain open for translators and critical bug fixes, but we are not looking to merge new features at this time (unless they are small and provide a siginificant benefit to users)**
 
 # Introduction
 
-Thank you for taking the time to contribute to iloader! 
+Thank you for taking the time to contribute to nexus-signer! 
 
-Following these guidelines helps show that you respect my (maintainer of iloader's) time. It helps ensure that your contribution will be reviewed in a timely and accurate manner. Failure to follow these guidelines may result in your pull request or issue being closed.
+Following these guidelines helps show that you respect my (maintainer of nexus-signer's) time. It helps ensure that your contribution will be reviewed in a timely and accurate manner. Failure to follow these guidelines may result in your pull request or issue being closed.
 
-iloader is an open source project and we love to receive contributions from the community! There are many ways to contribute, from translating, adding support for new apps, submitting bug reports and feature requests, or even fixing bugs or adding features.
+nexus-signer is an open source project and we love to receive contributions from the community! There are many ways to contribute, from translating, adding support for new apps, submitting bug reports and feature requests, or even fixing bugs or adding features.
 
 If you have a support question, the better place for it is in [discord](https://discord.gg/EA6yVgydBz).
 
-# isideload vs iloader
+# isideload vs nexus-signer
 
-iloader is split into two main parts. This repository is for the app itself, and it includes both a frontend in React and a backend in rust. However, all of the core sideloading functionality, including Apple ID authentication, code signatures, etc, is in [isideload](https://github.com/nab138/isideload). 
+nexus-signer is split into two main parts. This repository is for the app itself, and it includes both a frontend in React and a backend in rust. However, all of the core sideloading functionality, including Apple ID authentication, code signatures, etc, is in [isideload](https://github.com/nab138/isideload). 
 If you are trying to fix a bug related to this core sideloading functionality, this is not the place to do it! While there may be some workarounds possible from this repository, the better way would be to contribute to isideload directly so that all users of isideload get the fix, and to keep code organized.
 
-If you open a PR to iloader that very clearly should have been a change to isideload, it will be closed.
+If you open a PR to nexus-signer that very clearly should have been a change to isideload, it will be closed.
 
 # Ground Rules
 
-* **Before opening ANY issue, please check for an existing issue with the same problem!** iloader is plagued with duplicate issues that could've been resolved by searching for the error message first.
+* **Before opening ANY issue, please check for an existing issue with the same problem!** nexus-signer is plagued with duplicate issues that could've been resolved by searching for the error message first.
 * Completely fill out issue/pr templates. They exist for a reason, and while filling them out may seem tedious and pointless, they are there both to save time by reducing back-and-forths, and to help us collect more data on widespread issues.
-* Be polite. You are not entitled to support, or your PR getting merged. Everyone working on iloader, SideStore, etc is not being paid and is doing this in their free time. We aim to provide support to as much as the community as possible, but our time is limited. Please be respectful of that.
-* No piracy. If we suspect you are using iloader to support piracy or other illegal practices, your issue/pr will be closed and no support will be given.
+* Be polite. You are not entitled to support, or your PR getting merged. Everyone working on nexus-signer, SideStore, etc is not being paid and is doing this in their free time. We aim to provide support to as much as the community as possible, but our time is limited. Please be respectful of that.
+* No piracy. If we suspect you are using nexus-signer to support piracy or other illegal practices, your issue/pr will be closed and no support will be given.
 
 # AI Policy
 
@@ -45,12 +45,12 @@ If you do still choose use these tools in your pull request, you must follow the
 If you do not follow these guidelines, your pull request will likely be closed.
 
 # Pairing Apps Policy
-If you have an app that you want to add to iloader's list of recognized "pairing apps" so that iloader can automatically deliver the pairing file, feel free to open a PR!
+If you have an app that you want to add to nexus-signer's list of recognized "pairing apps" so that nexus-signer can automatically deliver the pairing file, feel free to open a PR!
 
 However, your app must follow these guidelines to be merged:
 * No piracy. If your app endorses piracy in any way, whether it be by cracking apps, providing piracy downloads, or endorsing other piracy services, it will not be allowed.
 * No stolen enterprise certificates. If your app relies on stolen certificates or provides links to acquire them, it will not be allowed.
 * Must be compliant with all software licenses. If your app is based on another or uses code/libraries from another project, you must be in compliance with all the relevant licenses. Special considerations will be given if you have explicit, verifiable permission from the author of the software.
-* Maintainer discretion. I reserve the right to reject apps for any reason not listed here should I determine it would pose a threat to iloader users, be in violation of the law, or otherwise be unethical.
+* Maintainer discretion. I reserve the right to reject apps for any reason not listed here should I determine it would pose a threat to nexus-signer users, be in violation of the law, or otherwise be unethical.
 
-Even if your app is added to iloader, we can remove it at any time if we determine you are not following these guidelines. 
+Even if your app is added to nexus-signer, we can remove it at any time if we determine you are not following these guidelines. 
