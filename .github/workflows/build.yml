@@ -1,4 +1,4 @@
-name: "Build nexus-signer"
+name: "Build nexus-signer main"
 
 on:
   push:
